@@ -1,9 +1,11 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
-import {Home,About, Contact} from './components'
+import {Home,About, Contact, Quiz} from './components'
+import { Provider } from 'react-redux'
+import { store } from './app/store.js'
+
 
 const router=createBrowserRouter(
   createRoutesFromElements(
@@ -11,12 +13,13 @@ const router=createBrowserRouter(
       <Route path='' element={<Home/>} />
       <Route path='about' element={<About/>} />
       <Route path='contact' element={<Contact/>} />
+      <Route path='quiz' element={<Quiz/>} />
     </Route>
   )
 )
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <Provider store={store}>
     <RouterProvider router={router}/>
-  </React.StrictMode>,
+  </Provider>,
 )

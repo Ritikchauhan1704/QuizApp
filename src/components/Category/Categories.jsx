@@ -73,14 +73,13 @@ const Categories = () => {
             img:"https://images.unsplash.com/photo-1602526432604-029a709e131c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         },
     ]
-    console.log(category.length);
     return (
         <>
         <h2 className="xl:text-4xl text-3xl text-center mt-5 mb-3 text-[#1F2544]">Choose a Category</h2>
         <div className="bg-[#1F2544] h-[1px] w-10/12 xl:w-1/2 md:w-2/3 sm:w-2/3 m-auto"></div>
         <div className="grid xl:grid-cols-4 md:grid-cols-3 gap-4 grid-cols-2 pl-4 pr-4 pb-4" >
             {category.map((items)=>(
-                <Cards topic={items.topic} id={items.id} img={items.img} key={items.id} />      
+                <Cards topic={items.topic} id={items.id} img={items.img} key={items.id}  />      
                 
                 ))}
         </div>
