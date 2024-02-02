@@ -6,23 +6,31 @@ const Quiz = () => {
   const id = useSelector((state) => state.id);
   const url = `https://opentdb.com/api.php?amount=10&category=${id}`;
   const [index, setIndex] = useState(0);
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
   const [showScore, setShowScore] = useState(false);
   const [score, setScore] = useState(0);
-  // const [data, setData] = useState([
-  //   {
-  //     ans: 'Cars',
-  //     options: ['Cars', 'Helicopters', 'Submarines', 'Planes'],
-  //     question: 'How does the character Dragowizard, Qinus Axia&#039;s from the anime &quot;Buddyfight&quot; differ between the Japanese and English dubs?',
-  //     type: 'multiple',
-  //   },
-  //   {
-  //     ans: 'Cars',
-  //     options: ['Cars', 'namste', 'Submarines', 'Planes'],
-  //     question: 'Rocket League is a game which features..',
-  //     type: 'multiple',
-  //   },
-  // ]);
+  const [data, setData] = useState([
+    {
+      ans: 'Cars',
+      options: ['Cars', 'Helicopters', 'Submarines', 'Planes'],
+      question:
+        'How does the character Dragowizard, Qinus Axia&#039;s from the anime &quot;Buddyfight&quot; differ between the Japanese and English dubs?',
+      type: 'multiple',
+    },
+    {
+      ans: 'Cars',
+      options: ['Cars', 'namste', 'Submarines', 'Planes'],
+      question: 'Rocket League is a game which features..',
+      type: 'multiple',
+    },
+    {
+      ans: 'True',
+      options: ['True', 'False'],
+      question:
+        'In the &quot;To Love-Ru&quot; series, Peke is considered a female robot.',
+      type: 'boolean',
+    },
+  ]);
   const shuffle = (arr) => {
     for (let i = arr.length - 1; i > 0; i--) {
       let j = Math.floor(Math.random() * (i + 1));
@@ -59,9 +67,9 @@ const Quiz = () => {
       console.log(error.message);
     }
   };
-  useEffect(() => {
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   getData();
+  // }, []);
   const handleAnswerSubmit = (item) => {
     if (item === data[index].ans) setScore((prev) => prev + 1);
     if (index < data.length - 1) setIndex((prev) => prev + 1);
@@ -69,17 +77,17 @@ const Quiz = () => {
   };
   //Convert html entities to text
   function decode(str) {
-    let txt = document.createElement("textarea");
+    let txt = document.createElement('textarea');
     txt.innerHTML = str;
     return txt.value;
-}
+  }
   if (data.length > 0) {
     return (
       <div className="flex justify-center items-center h-[100vh] text-white mt-[-5rem]">
-        <div className="bg-[#1F2544] w-[37rem]   rounded-[15px] p-5 flex justify-evenly h-80 p-7">
+        <div className="bg-[#1F2544] w-[37rem]   rounded-[15px] p-5 flex justify-evenly h-80 ">
           {showScore ? (
             <div className="flex text-4xl  flex-col items-center justify-center">
-              <p className='mb-10'>Your Score</p>
+              <p className="mb-10">Your Score</p>
               <p>
                 {score} out of {data.length}
               </p>
@@ -93,7 +101,7 @@ const Quiz = () => {
                 </div>
                 <div className="mb-3">{decode(data[index].question)}</div>
               </div>
-              <ul className="w-full flex flex-col justify-between">
+              <ul className="w-full flex flex-col ">
                 {data[index].options.map((item, ind) => (
                   <li
                     key={ind}
