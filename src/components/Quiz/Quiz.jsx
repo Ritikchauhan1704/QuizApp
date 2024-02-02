@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 
 const Quiz = () => {
   const id = useSelector((state) => state.id);
-  const url = `https://opentdb.com/api.php?amount=15&category=${id}`;
+  const url = `https://opentdb.com/api.php?amount=10&category=${id}`;
   const [index, setIndex] = useState(0);
   const [data, setData] = useState([]);
   const [showScore, setShowScore] = useState(false);
@@ -13,7 +13,7 @@ const Quiz = () => {
   //   {
   //     ans: 'Cars',
   //     options: ['Cars', 'Helicopters', 'Submarines', 'Planes'],
-  //     question: 'Rocket League is a game which features..',
+  //     question: 'How does the character Dragowizard, Qinus Axia&#039;s from the anime &quot;Buddyfight&quot; differ between the Japanese and English dubs?',
   //     type: 'multiple',
   //   },
   //   {
@@ -61,44 +61,52 @@ const Quiz = () => {
   };
   useEffect(() => {
     getData();
-  },[]);
-  const handleNext = () => {
-    if (index < data.length-1) setIndex((prev) => prev + 1);
+  }, []);
+  const handleAnswerSubmit = (item) => {
+    if (item === data[index].ans) setScore((prev) => prev + 1);
+    if (index < data.length - 1) setIndex((prev) => prev + 1);
     else setShowScore(true);
   };
-  const handleAnswerSubmit = (e,item) => {
-    if(item===data[index].ans)setScore((prev)=>prev+1);
-  };
-  if (data.length>0) {
+  //Convert html entities to text
+  function decode(str) {
+    let txt = document.createElement("textarea");
+    txt.innerHTML = str;
+    return txt.value;
+}
+  if (data.length > 0) {
     return (
-      <div className="flex flex-col justify-center items-center h-[75vh] w-[50vh] bg-slate-400 mt-6 m-auto border-2 border-black">
-        {showScore ? (
-          <h2>
-            Your Score is {score} out of {data.length}
-          </h2>
-        ) : (
-          <>
-            <h2>
-              {index + 1}.{data[index].question}
-            </h2>
-            <ul className="w-full m-10">
-              {data[index].options.map((item, ind) => (
-                <li key={ind} className="p-2 bg-slate-800 text-white my-2 cursor-pointer mx-1 rounded-lg" onClick={(e)=>handleAnswerSubmit(e,item)}>
-                  {ind + 1}.{item}
-                </li>
-              ))}
-            </ul>
-            <button
-              onClick={handleNext}
-              className="mb-3 p-3 bg-purple-700 text-white rounded-2xl"
-            >
-              Next
-            </button>
-            <div className="">
-              {index + 1} of {data.length} questions
+      <div className="flex justify-center items-center h-[100vh] text-white mt-[-5rem]">
+        <div className="bg-[#1F2544] w-[37rem]   rounded-[15px] p-5 flex justify-evenly h-80 p-7">
+          {showScore ? (
+            <div className="flex text-4xl  flex-col items-center justify-center">
+              <p className='mb-10'>Your Score</p>
+              <p>
+                {score} out of {data.length}
+              </p>
             </div>
-          </>
-        )}
+          ) : (
+            <>
+              <div className="w-full relative">
+                <div className="mb-5">
+                  <span className="text-2xl">Question {index + 1}</span>/
+                  {data.length}
+                </div>
+                <div className="mb-3">{decode(data[index].question)}</div>
+              </div>
+              <ul className="w-full flex flex-col justify-between">
+                {data[index].options.map((item, ind) => (
+                  <li
+                    key={ind}
+                    className="w-full  text-white bg-[#252d4a] rounded-2xl flex p-3 justify-start items-center border-4 border-[#234668] cursor-pointer hover:bg-[#555e7d] mb-2"
+                    onClick={() => handleAnswerSubmit(item)}
+                  >
+                    {decode(item)}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </div>
       </div>
     );
   } else {
